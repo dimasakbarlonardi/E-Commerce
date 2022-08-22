@@ -49,10 +49,10 @@
                         <a href="{{route('produk.index')}}">
                             <i class="sidebar-item-icon fas fa-store "></i>  <span class="nav-label">Produk</span>
                         </a>
-                        <a href="{{route('produk.index')}}">
+                        <a href="{{route('transaksi.index')}}">
                             <i class="sidebar-item-icon fas fa-store "></i>  <span class="nav-label">Transaksi</span>
                         </a>
-                        <a href="{{route('produk.index')}}">
+                        <a href="{{route('transaksidetail.index')}}">
                             <i class="sidebar-item-icon fas fa-store "></i>  <span class="nav-label">Transaksi Detail</span>
                         </a>
                     </li>

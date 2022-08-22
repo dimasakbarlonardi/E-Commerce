@@ -18,8 +18,8 @@ class CreatePesanansTable extends Migration
             $table->integer('user_id');
             $table->date('tanggal');
             $table->string('status', 26);
-            $table->integer('ongkir');
-            $table->string('kurir', 10);
+            $table->integer('ongkir')->nullable();
+            $table->string('kurir', 10)->nullable();
             $table->integer('jumlah_harga');
             $table->timestamps();
         });

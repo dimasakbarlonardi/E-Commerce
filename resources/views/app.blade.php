@@ -55,7 +55,7 @@
                     <ul class="nav navbar-nav menu_nav ml-auto">
                         <li class="nav-item"><a class="nav-link" href="{{ route ('home.index') }}">Beranda</a></li>
                         <li class="nav-item submenu dropdown">
-                            <a class="nav-link dropdown-toggle" href="{{route ('produk.index')}}">Produk</a>
+                            <a class="nav-link dropdown-toggle" href="{{route ('produks.index')}}">Produk</a>
                         </li>
 						<li class="nav-item"><a class="nav-link" href="{{route ('about.index')}}">Tentang Kami</a></li>
                         <li class="nav-item submenu dropdown">
@@ -100,7 +100,7 @@
 		<footer class="footer-area section_gap">
 			<div class="container">
 				<div class="row">
-					<div class="col-lg-3  col-md-6 col-sm-6">
+					<div class="col-lg-3  col-md-5 col-sm-6">
 						<div class="single-footer-widget">
 							<h6>Tentang Kami</h6>
 							<p>

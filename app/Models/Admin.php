@@ -11,6 +11,7 @@ class Admin extends Authenticable
 {
     use HasFactory, Notifiable;
     protected $guarded = ['admin_id'];
+    protected $primaryKey = 'admin_id';
 
     protected $hidden = [
         'password', 'remember_token',];

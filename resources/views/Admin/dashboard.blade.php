@@ -6,18 +6,18 @@
         <div class="col-lg-3 col-md-6">
             <div class="ibox bg-success color-white widget-stat">
                 <div class="ibox-body">
-                    {{-- <h2 class="m-b-5 font-strong">{{$barang->count()}}</h2> --}}
+                    <h2 class="m-b-5 font-strong">{{$produks->count()}}</h2>
                     <div class="m-b-5">PRODUK</div><i class="ti-shopping-cart widget-stat-icon"></i>
-                    <div><small>jumlah produk</small></div>
+                    <div><small>Jumlah Produk</small></div>
                 </div>
             </div>
         </div>
         <div class="col-lg-3 col-md-6">
             <div class="ibox bg-danger color-white widget-stat">
                 <div class="ibox-body">
-                    {{-- <h2 class="m-b-5 font-strong">{{$user->count()}}</h2> --}}
+                    <h2 class="m-b-5 font-strong">{{$user->count()}}</h2>
                     <div class="m-b-5">USER</div><i class="ti-user widget-stat-icon"></i>
-                    <div><small>jumlah admin</small></div>
+                    <div><small>Jumlah User</small></div>
                 </div>
             </div>
         </div>
@@ -26,35 +26,52 @@
 {{-- tabel jenis --}}
 <div class="ibox mt-5">
     <div class="ibox-head mt-5">
-        <div class="ibox-title text-center">Data Pesanan </div>
+        <div class="ibox-title text-center">Data Pemesanan </div>
     </div>
     <div class="ibox-body">
-        {{-- @forelse ($pesanan as $item) --}}
         <div class="table-responsive">
             <table class="table">
                 <thead>
                     <tr>
-                        <th width="50px"></th>
-                        <th>No.</th>
-                        <th width="50px"></th>
-                        <th>Nama User</th>
-                        <th width="50px"></th>
-                        <th>Total</th>
+                        <th scope="col">No</th>
+                        <th scope="col">Id Transaksi</th>
+                        <th scope="col">Nama Pemesan</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Total</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @forelse ($pesanan as $item)
                         <tr>
-                            <td width="50px"></td>
-                            {{-- <td>{{$loop->iteration}}</td> --}}
-                            <td width="50px"></td>
-                            {{-- <td>{{ $item->user->name }}</td> --}}
-                            <td width="50px"></td>
-                            {{-- <td>Rp. {{ number_format($item->total_harga, 0, ',', '.') }}</td> --}}
-                        </tr>    
-                    </div>
+                            <td>{{$loop->iteration}}</td>
+                            <td>{{$item->id}}</td>
+                            <td>{{$item->User->name}}</td>
+                            <td>
+                                @if ($item->ongkir == null)
+                                    Menunggu Konfirmasi
+                                    @elseif ($item->status == 1)
+                                        Belum Dibayar
+                                @else
+                                    Lunas
+                                @endif
+                            </td>
+                             <td>Rp. {{number_format($item->jumlah_harga + $item->ongkir, 0, ',', '.')}}</td>
+                             td class="inline text-center">
+                                                    <a href="{{url('Transaksis/'.$item->id.'/edit')}}" class="btn btn-primary btn-sm">
+                                                        <i class="ti-pencil"></i>
+                                                    </a>
+                                                </td>  
+                                     </tr>
+                          @empty
+                    
+                    @endforelse
+                
+                </tbody>
+            </table>
+            
+        </div>
+        {{-- {{$barang->links()}} --}}
     </div>
-    {{-- @empty  
-    @endforelse --}}
 </div>
 
 {{-- akhir tabel jenis --}}

@@ -24,10 +24,10 @@
                         <div class="details_item">
                             <h3> Profil User</h3>
                             <ul class="list">
-                                <li><a href="#"><span>Nama</span> : {{ Auth::user()->name }}</a></li>
-                                <li><a href="#"><span>E-Mail</span> : {{ Auth::user()->email }}</a></li>
-                                <li><a href="#"><span>Alamat</span> : {{ Auth::user()->alamat }}</a></li>
-                                <li><a href="#"><span>No. Hp</span> : {{ Auth::user()->nohp }} </a></li>
+                                <li><a ><span>Nama</span> : {{ Auth::user()->name }}</a></li>
+                                <li><a ><span>E-Mail</span> : {{ Auth::user()->email }}</a></li>
+                                <li><a ><span>Alamat</span> : {{ Auth::user()->alamat }}</a></li>
+                                <li><a ><span>No. Hp</span> : {{ Auth::user()->nohp }} </a></li>
                             </ul>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                         </div>
                         <div class="col-md-12 form-group">
                             <p style=text-align:left >No. Hp :</p>
-                            <input type="text" class="form-control" name="nohp" placeholder="No.Hp Anda">
+                            <input type="number" class="form-control" name="nohp" placeholder="No.Hp Anda">
                         </div>
                         <div class="col-md-12 form-group">
                             <button type="submit" value="submit" class="primary-btn">Update Profil</button>
