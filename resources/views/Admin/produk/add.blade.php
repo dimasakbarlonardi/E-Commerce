@@ -20,7 +20,7 @@
   </div>
 
   <div class="col-md-1">
-    <label for="inputCity" class="form-label">Kategori</label>
+    <label for="inputkategori" class="form-label">Kategori</label>
     <select name="kategori" class="form-select" aria-label="Default select example">
         <option value="" selected>Kategori Liga</option>
         <option value="Liga Spanyol">Liga Spanyol</option>

@@ -33,15 +33,11 @@
                                                 @endif
                                             </td>
                                              <td>Rp. {{number_format($item->jumlah_harga + $item->ongkir, 0, ',', '.')}}</td>
-                                             td class="inline text-center">
-                                                                    <a href="{{url('Transaksis/'.$item->id.'/edit')}}" class="btn btn-primary btn-sm">
-                                                                        <i class="ti-pencil"></i>
-                                                                    </a>
-                                                                </td>
+                                             
                                             <td>
-                                                <a href="{{route('produk.edit',$item->produk_id)}}"> <button class="btn btn-default btn-xs m-r-5" data-toggle="tooltip" data-original-title="Edit"><i class="fas fa-pen-square font-14"></i></button></a>
+                                                <a href="{{route('transaksi.edit',$item->pesanan_id)}}"> <button class="btn btn-default btn-xs m-r-5" data-toggle="tooltip" data-original-title="Edit"><i class="fas fa-pen-square font-14"></i></button></a>
                                                
-                                                <form action="{{route('produk.destroy',$item->produk_id)}}" class="d-inline" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus data ini ?')">
+                                                <form action="{{route('transaksi.destroy',$item->pesanan_id)}}" class="d-inline" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus data ini ?')">
                                                     @method('delete')
                                                     @csrf
                                                     <button class="btn btn-default btn-xs" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-trash font-14"></i></button>
