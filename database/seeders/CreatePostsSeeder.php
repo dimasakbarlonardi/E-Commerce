@@ -15,9 +15,9 @@ class CreatePostsSeeder extends Seeder
     public function run()
     {
         admin::create([
-            'name' => 'Dimas Akbar',
-            'email' => 'dimas.akbar.lonardi@gmail.com',
-            'password' => bcrypt('qwerty123'),
+            'name' => 'Eland Jersey',
+            'email' => 'admin@gmail.com',
+            'password' => bcrypt('Admin123'),
         ]);
     }
 }

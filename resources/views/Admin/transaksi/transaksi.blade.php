@@ -21,12 +21,12 @@
                                     @forelse ($pesanans as $item)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
-                                            <td>{{$item->id}}</td>
+                                            <td>{{$item->pesanan_id}}</td>
                                             <td>{{$item->User->name}}</td>
                                             <td>
                                                 @if ($item->ongkir == null)
                                                     Menunggu Konfirmasi
-                                                    @elseif ($item->status == 1)
+                                                    @elseif ($item->status == 'Belum Bayar')
                                                         Belum Dibayar
                                                 @else
                                                     Lunas
@@ -39,9 +39,9 @@
                                                                     </a>
                                                                 </td>
                                             <td>
-                                                <a href="{{route('produk.edit',$item->produk_id)}}"> <button class="btn btn-default btn-xs m-r-5" data-toggle="tooltip" data-original-title="Edit"><i class="fas fa-pen-square font-14"></i></button></a>
+                                                <a href="{{ route('transaksi.edit', $item->pesanan_id) }}"> <button class="btn btn-default btn-xs m-r-5" data-toggle="tooltip" data-original-title="Edit"><i class="fas fa-pen-square font-14"></i></button></a>
                                                
-                                                <form action="{{route('produk.destroy',$item->produk_id)}}" class="d-inline" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus data ini ?')">
+                                                <form action="" class="d-inline" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus data ini ?')">
                                                     @method('delete')
                                                     @csrf
                                                     <button class="btn btn-default btn-xs" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-trash font-14"></i></button>

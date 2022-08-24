@@ -22,17 +22,17 @@
                         <h3><b>Kategori Liga</b></h3>
                         <select name="kategori" class="form-select-md-9 center mt-3 mb-3" aria-label="Default select example">
                             <option value="" selected>Pilih Liga</option>
-                            <option value="3">Liga Spanyol</option>
+                            <option value="Liga Spanyol">Liga Spanyol</option>
                             <option value="Liga Italy">Liga Italy</option>
                             <option vlue="Liga Inggris">Liga Inggris</option>
                             <option value="Liga paris">Liga paris</option>
                             <option value="Liga German">Liga German</option>
                             <option value="Negara">Negara</option>
                           </select>
+                          <div class="col-md-15 mt-3 mb-3 form-group">
+                         <button type="submit" value="submit" class="primary-btn sm-3 mb-3">Cari Kategori</button>
+                    </div>
                     </form>
-                      <div class="col-md-15 mt-3 mb-3 form-group">
-                     <button type="submit" value="submit" class="primary-btn sm-3 mb-3">Cari Kategori</button>
-                </div>
                 </ul>
             </div>
         </div>

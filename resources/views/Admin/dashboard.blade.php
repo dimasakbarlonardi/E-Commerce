@@ -44,19 +44,19 @@
                     @forelse ($pesanan as $item)
                         <tr>
                             <td>{{$loop->iteration}}</td>
-                            <td>{{$item->id}}</td>
+                            <td>{{$item->pesanan_id}}</td>
                             <td>{{$item->User->name}}</td>
                             <td>
                                 @if ($item->ongkir == null)
                                     Menunggu Konfirmasi
-                                    @elseif ($item->status == 1)
-                                        Belum Dibayar
+                                @elseif ($item->status == 'Belum Bayar')
+                                    Belum Dibayar
                                 @else
                                     Lunas
                                 @endif
                             </td>
                              <td>Rp. {{number_format($item->jumlah_harga + $item->ongkir, 0, ',', '.')}}</td>
-                             td class="inline text-center">
+                             <td class="inline text-center">
                                                     <a href="{{url('Transaksis/'.$item->id.'/edit')}}" class="btn btn-primary btn-sm">
                                                         <i class="ti-pencil"></i>
                                                     </a>

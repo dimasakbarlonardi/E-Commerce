@@ -61,7 +61,7 @@ class UserController extends Controller
         $pesanan = Pesanan::where('user_id', Auth::user()->user_id)->where('status', 'Check Out')->first();
         if(!empty($pesanan)) {
             $pesananDetail = PesananDetail::where('pesanan_id', $pesanan->pesanan_id)->get();
-        return view ('HalamanDepan/cart',compact('pesanan', 'pesananDetail'));
+            return view ('HalamanDepan/cart',compact('pesanan', 'pesananDetail'));
         }
         return redirect()->route('produks.index');
     }
@@ -98,9 +98,15 @@ class UserController extends Controller
 
     public function riwayat()
     {
-        $pesanan = Pesanan::where('user_id', Auth::user()->user_id)->where('status', '!=', 0)->get();
-        return view('HalamanDepan/riwayatshop', compact('pesanan'));
+        $pesanan = Pesanan::where('ongkir', null)->where('kurir', null)->first();
+        $pesananAll = Pesanan::all()->where('status', '!=', 'Check Out');
+        if (!$pesanan == null) {
+            return view('HalamanDepan.konfirmasi');
+        } else {
+            return view('HalamanDepan/riwayatshop', compact('pesananAll'));
+        }
     }
+
     public function detail($id)
     {
         $pesanan_konfirmasi = Pesanan::where('id', $id)->where('ongkir', 0)->first();
@@ -112,7 +118,8 @@ class UserController extends Controller
             return view('HalamanDepan/konfirmasi');
         }
     }
-
+    
+    // ! Masukkin produk ke keranjang
     public function pesan(Request $request, $produk_id)
     {   
         // Validasi
@@ -122,7 +129,7 @@ class UserController extends Controller
             'jumlah.required' => 'Masukkan jumlah pesanan',
         ]);
 
-        $produks = Produk::find($produk_id)->first();
+        $produks = Produk::where('produk_id', $produk_id)->first();
         $tanggal = Carbon::now()->format('Y-m-d');
         $total = $produks->harga * $request->jumlah;
         // Validasi jumlah pesanan melebihi stock
@@ -184,48 +191,59 @@ class UserController extends Controller
         } else {
             return redirect()->back()->with('status', 'Masukkan jumlah pesanan');
         }
-
         return redirect('/')->with('status', 'Pesanan anda sudah masuk ke keranjang');
     }
 
-    public function checkout()
+    // ! Delete produk yang ada di keranjang
+    public function delete($pesanandetail_id)
     {
-        $pesanan = Pesanan::where('user_id', Auth::user()->user_id)->where('status', 0)->first();
-        if (!empty($pesanan)) {
-            $pesananDetail = PesananDetail::where('pesanan_id', $pesanan->pesanan_id)->get();
-            return view('HalamanDepan/cart', compact('pesanan', 'pesananDetail'));
+        // Mencari pesanan detail id
+        $pesananDetail = PesananDetail::where('pesanandetail_id', $pesanandetail_id)->first();
+        $pesananDetail->delete();
+        // Mencari pesanan dengan id yang sama dengan pesanan detail
+        $pesanan = Pesanan::where('pesanan_id', $pesananDetail->pesanan_id)->first();
+        // Mencari pesanan detail id yang sama pesanan id
+        $pesananId = Pesanan::where('user_id', Auth::user()->user_id)->where('status', 'Check Out')->first();
+        $pesananDetailId = PesananDetail::where('pesanan_id', $pesananId->pesanan_id)->first(); 
+
+        if(empty($pesananDetailId)) {
+            $pesanan->delete();
+            return redirect()->route('home.index')->with('status', 'Keranjang Anda Kosong!, Silahkan Lakukan Pemesanan');
+        } else {
+            // Mengupdate pesanan jumlah harga
+            $total  = $pesanan->jumlah_harga - $pesananDetail->jumlah_harga;
+            $pesanan->update([
+                'jumlah_harga' => $total,
+            ]);
+            $pesanan->save();
+            return redirect()->back()->with('status', 'Pesanan Berhasil Dihapus!');
         }
-        return redirect('/')->with('status', 'Anda berhasil melakukan check out, 
-            Terimakasih sudah belanja di K-Style Outlet');
+
     }
 
-    
-    public function konfirmasi()
+     public function checkOut(Request $request)
     {
-        $user = User::where('id', Auth::user()->user_id)->first();
-        if (empty($user->alamat)) {
-            return redirect('/Profile')
-                ->with('status biodata', 'Silahkan lengkapi biodata terlebih dahulu!');
-        }
-        if (empty($user->nohp)) {
-            return redirect('/Profile')
-                ->with('status biodata', 'Silahkan lengkapi biodata terlebih dahulu!');
+        $user = User::where('user_id', Auth::user()->user_id)->first();
+        if(empty($user->alamat) || empty($user->nohp)){
+            return redirect()->route('profil.index')->with('status', 'Lengkapi Profile Anda Terlebih Dahulu!');
+        } 
+
+        $pesananUpdate = Pesanan::where('user_id', Auth::user()->user_id)->where('status', 'Check Out')->first();
+        $pesananUpdate->update([
+            'status' => 'Menunggu Konfimasi Admin',
+        ]);
+        $pesananUpdate->save();
+        
+        $pesananDetail = PesananDetail::where('pesanan_id', $pesananUpdate->pesanan_id)->get();
+        foreach ($pesananDetail as $pesananDetail) {
+            $barang = Produk::where('produk_id', $pesananDetail->produk->produk_id)->first();
+            $barang->update([
+                'stock' => $barang->stock - $pesananDetail->jumlah_pesanan,
+            ]);
+            $barang->save();
         }
 
-        $pesanan = Pesanan::where('user_id', Auth::user()->user_id)->where('status', 0)->first();
-        $pesanan_id = $pesanan->id;
-        $pesanan->status = 1;
-        $pesanan->update();
-
-        $PesananDetail = PesananDetail::where('pesanan_id', $pesanan_id)->get();
-        foreach ($pesanan_details as $PesananDetail) {
-            $produk = Barang::where('id', $PesananDetail->produk->produk_id)->first();
-            $produk->stok = $produk->stok - $PesananDetail->jumlah;
-            $produk->update();
-        }
-        return redirect('/History/' . $pesanan_id)
-            ->with('status', 'Pesanan berhasil di check out');
+        return redirect()->route('riwayat.index')->with('status', 'Pesanan Berhasil Di Check Out');
     }
-
 }
 

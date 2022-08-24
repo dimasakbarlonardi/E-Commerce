@@ -5,14 +5,19 @@
                         <div class="ibox-title text-center">Ubah Status Pemesanan </div>
                     </div>
                     <div class="card-body card-block">
-                        <form action="{{url('Transaksis/'.$pesanans->id)}}" class="row g-3" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('transaksi.update', $pesanans->pesanan_id) }}" class="row g-3" method="POST" enctype="multipart/form-data">
                           @csrf
                           @method('put')
-                            <div class="col-md-1">
+                            <div class="col-md-4">
                               <label for="inputStatus" class="form-label"><h6>Status</h6></label>
-                              <input name="status" type="text" class="form-control @error('status') is-invalid @enderror" id="inputStatus" placeholder="Ex.2" value="{{old('status',$pesanans->status)}}">
+                              <select name="status" id="inputKurir" class="form-select">
+                                <option value="">- Pilih Status -</option>
+                                <option value="Menunggu Konfimasi Admin" @if ($pesanans->status == 'Menunggu Konfimasi Admin') selected @endif>Menunggu Konfimasi Admin</option>
+                                <option value="Belum Bayar" @if ($pesanans->status == 'Belum Bayar') selected @endif>Belum Bayar</option>
+                                <option value="Sudah Bayar" @if ($pesanans->status == 'Sudah Bayar') selected @endif>Sudah Bayar</option>
+                              </select>
                               @error('status')
-                                  <div class="invalid-feedback">{{$message}}</div>
+                                  <p class="invalid-feedback">{{$message}}</p>
                               @enderror
                             </div>
                             <div class="col-md-2">
@@ -31,18 +36,11 @@
                                   <option value="Sicepat" @if ($pesanans->kurir == 'Sicepat') selected @endif>Sicepat</option>
                                 </select>
                             </div>
-                            <div class="col-md-12">
-                                <p style="color: red">Keterangan: </p>
-                                <p>
-                                    Status jika bernilai 1 (Satu), maka pemesan belum membayar pesanan. <br>
-                                    Berikan nilai selain 1 (Satu) jika pemesan sudah melakukan pembayaran dan konfirmasi pembayaran.
-                                </p>
-                            </div>
                             <div class="col-12 mt-3">
                               <button type="submit" class="btn btn-primary">
                                 <i class="ti-save"></i> Simpan
                               </button>
-                              <a href="{{route('Transaksis.index')}}">
+                              <a href="{{route('transaksi.index')}}">
                                 <button type="button" class="btn btn-secondary">
                                   <i class="ti-back-left"></i> Kembali
                                 </button>

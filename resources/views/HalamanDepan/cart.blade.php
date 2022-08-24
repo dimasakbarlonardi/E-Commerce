@@ -67,6 +67,9 @@
                                 </div>
                             </td>
                         </tr>
+                        
+                        @empty
+                        @endforelse
                        
                         <tr class="bottom_button">
                             <td>          
@@ -159,11 +162,16 @@
                             <td>
                             </td>
                             <td>
-                                <a class="primary-btn" href="{{route ('konfirmasi.index')}}" onsubmit="return confirm('Anda yakin ingin check out ?')">Pesan</a>  
+                                @forelse ($pesananDetail as $item)
+                                    <form action="{{ route('checkout.index', $item->pesanan_id) }}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        <button type="submit" class="primary-btn" onsubmit="return confirm('Anda yakin ingin check out ?')">Pesan</button>  
+                                    </form>
+                                @empty
+                                    
+                                @endforelse
                             </td>
                         </tr>
-                        @empty
-                        @endforelse
                     </tbody>
                 </table>
             </div>

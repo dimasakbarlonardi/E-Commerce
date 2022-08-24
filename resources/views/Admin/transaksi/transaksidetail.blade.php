@@ -21,7 +21,7 @@
                                                                 <thead>
                                                                     <tr>
                                                                         <th scope="col">Id Transaksi</th>
-                                                                        <th scope="col">Id Barang</th>
+                                                                        <th scope="col">Nama Pemesan</th>
                                                                         <th scope="col">Nama Barang</th>
                                                                         <th scope="col">Size</th>
                                                                         <th scope="col">Jumlah Pesanan</th>
@@ -31,8 +31,8 @@
                                                                     @forelse ($pesanan_details as $item)
                                                                         <tr>
                                                                             <td>{{$item->pesanan_id}}</td>
-                                                                            <td>{{$item->barang_id}}</td>
-                                                                            <td>{{$item->barang->nama_barang}}</td>
+                                                                            <td>{{$item->pesanan->user->name}}</td>
+                                                                            <td>{{$item->produk->nama_barang}}</td>
                                                                             <td>{{$item->size}}</td>
                                                                             <td>{{$item->jumlah}}</td>
                                                                         </tr>
