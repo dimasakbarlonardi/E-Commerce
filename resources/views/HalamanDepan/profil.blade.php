@@ -40,11 +40,11 @@
                         @csrf
                         <div class="col-md-12 form-group">
                             <p style=text-align:left >Nama :</p>
-                            <input type="text" class="form-control" name="name" placeholder="Nama Anda">
+                            <input type="text" class="form-control" name="name" value="{{ Auth::user()->name }}">
                         </div>
                         <div class="col-md-12 form-group">
                             <p style=text-align:left >E-Mail :</p>
-                            <input type="text" class="form-control" name="email" placeholder="Email Anda">
+                            <input type="text" class="form-control" name="email" value="{{ Auth::user()->email }}">
                         </div>
                         <div class="col-md-12 form-group">
                             <p style=text-align:left >Alamat :</p>

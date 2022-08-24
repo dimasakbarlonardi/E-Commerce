@@ -43,14 +43,15 @@
                 <tbody>
                     @forelse ($pesanan as $item)
                         <tr>
+                            <td>{{$loop->iteration}}</td>
                             <td>{{$item->tanggal}}</td>
                             <td>{{$item->pesanan_id}}</td>
                             <td>{{$item->User->name}}</td>
                             <td>
                                 @if ($item->ongkir == null)
                                     Menunggu Konfirmasi
-                                    @elseif ($item->status == 1)
-                                        Belum Dibayar
+                                @elseif ($item->status == 'Belum Bayar')
+                                    Belum Dibayar
                                 @else
                                     Lunas
                                 @endif

@@ -10,19 +10,24 @@
                           @method('put')
                             <div class="col-md-3">
                               <label for="inputStatus" class="form-label"><h6>Status</h6></label>
-                              <input name="status" type="text" class="form-control @error('status') is-invalid @enderror" id="inputStatus" placeholder="Ex.2" value="{{old('status',$pesanans->status)}}">
+                              <select name="status" id="inputKurir" class="form-select">
+                                <option value="">- Pilih Status -</option>
+                                <option value="Menunggu Konfimasi Admin" @if ($pesanans->status == 'Menunggu Konfimasi Admin') selected @endif>Menunggu Konfimasi Admin</option>
+                                <option value="Belum Bayar" @if ($pesanans->status == 'Belum Bayar') selected @endif>Belum Bayar</option>
+                                <option value="Sudah Bayar" @if ($pesanans->status == 'Sudah Bayar') selected @endif>Sudah Bayar</option>
+                              </select>
                               @error('status')
-                                  <div class="invalid-feedback">{{$message}}</div>
+                                  <p class="invalid-feedback">{{$message}}</p>
                               @enderror
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                               <label for="inputOngkir" class="form-label"><h6>Ongkir</h6></label>
                               <input name="ongkir" type="text" class="form-control @error('status') is-invalid @enderror" id="inputOngkir" placeholder="Ex.8000" value="{{old('status',$pesanans->ongkir)}}">
                               @error('ongkir')
                                   <div class="invalid-feedback">{{$message}}</div>
                               @enderror
                             </div>
-                            <div class="col-md-1">
+                            <div class="col-md-3">
                               <label for="inputKurir" class="form-label"><h6>Kurir</h6></label>
                                 <select name="kurir" id="inputKurir" class="form-select" aria-label="Default select example">
                                   <option value="">- Pilih Kurir -</option>
@@ -30,13 +35,6 @@
                                   <option value="JNE" @if ($pesanans->kurir == 'JNE') selected @endif>JNE</option>
                                   <option value="Sicepat" @if ($pesanans->kurir == 'Sicepat') selected @endif>Sicepat</option>
                                 </select>
-                            </div>
-                            <div class="col-md-12">
-                                <p style="color: red">Keterangan: </p>
-                                <p>
-                                    Status jika bernilai 1 (Satu), maka pemesan belum membayar pesanan. <br>
-                                    Berikan nilai selain 1 (Satu) jika pemesan sudah melakukan pembayaran dan konfirmasi pembayaran.
-                                </p>
                             </div>
                             <div class="col-12 mt-3">
                               <button type="submit" class="btn btn-primary">

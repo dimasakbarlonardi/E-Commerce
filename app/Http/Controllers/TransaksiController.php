@@ -72,14 +72,11 @@ class TransaksiController extends Controller
     public function update(Request $request, $pesanan_id)
     {
         $request->validate([
-            'status' => 'required|integer|max:2',
-            'ongkir' => 'required|max:5',
+            'status' => 'required',
+            'ongkir' => 'required',
         ], [
             'status.required' => 'Status transaksi tidak boleh kosong',
-            'status.integer' => 'Status transaksi harus angka',
-            'status.max' => 'Status transaksi tidak boleh lebih dari angka 2',
             'ongkir.required' => 'Ongkir tidak boleh kosong',
-            'ongkir.max' => 'Ongkir tidak boleh lebih dari angka 5',
         ]);
         $pesanans = Pesanan::find($pesanan_id);
         $pesanans->update([
@@ -98,8 +95,11 @@ class TransaksiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($pesanan_id)
     {
-        //
+        $pesanan = Pesanan::find($pesanan_id);
+        $pesanan->delete();
+
+        return back()->with('status', 'Data pesanan berhasil dihapus');
     }
 }
