@@ -28,7 +28,7 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    @forelse ($pesanan_details as $item)
+                                                                    @forelse ($PesananDetail as $item)
                                                                         <tr>
                                                                             <td>{{$item->pesanan_id}}</td>
                                                                             <td>{{$item->pesanan->user->name}}</td>

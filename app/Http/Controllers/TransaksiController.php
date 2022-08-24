@@ -95,8 +95,11 @@ class TransaksiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($pesanan_id)
     {
-        //
+        $pesanan = Pesanan::find($pesanan_id);
+        $pesanan->delete();
+
+        return back()->with('status', 'Data pesanan berhasil dihapus');
     }
 }
