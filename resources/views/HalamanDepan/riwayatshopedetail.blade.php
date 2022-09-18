@@ -18,6 +18,7 @@
 <section class="order_details section_gap">
     <div class="container">
 <center>
+    @if ($pesanan->noresi == null)
     <div class="cart__discount mt-5 mb-3">
         <h4 style="color: red; margin-bottom: 0px"><b>Pembayaran</b></h4>
         <h4 style="color: #212121; margin-top: 15px">Silahkan anda transfer di rekening <b>BANK MANDIRI Nomor Rekening : 115000-7138235</b>
@@ -26,6 +27,13 @@
             <h5>Kemudian konfirmasi melalui via Whatsapp dengan nomor: <b>081282803075</b> <br> 
                 cantumkan nama <b>(Nama harus sesuai dengan akun Eland Jersey Sports) jika status sudah berubah menjadi <b> sudah bayar </b> resi akan dikirim melalui whatsapp </b></h5>
     </div>
+    @else
+    <div class="cart__discount mt-5 mb-3">
+        <h4 style="color: red; margin-bottom: 0px"><b>Terimakasih Sudah Membayar</b></h4>
+        <h4 style="color: #212121; margin-top: 15px">Pesanan anda sedang dikirimkan</h4>
+        <h4 style="color: #212121; margin-top: 15px">No Resi : {{ $pesanan->noresi }}</h4>
+    </div>
+    @endif
 </center>
     <div class="order_details_table">
         <h2>Order Details</h2>
@@ -79,6 +87,21 @@
                         </td>
                         <td>
                             <p>{{($pesanan->kurir)}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4>No Resi</h4>
+                        </td>
+                        <td>
+                            <h5></h5>
+                        </td>
+                        <td>
+                            @if ($pesanan->noresi == null)
+                            <p> - </p>
+                            @else
+                            <p>{{ $pesanan->noresi }}</p>
+                            @endif
                         </td>
                     </tr>
                     <tr>
