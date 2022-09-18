@@ -32,7 +32,6 @@ class UserController extends Controller
     // Halaman Tentang Kami User
     public function about()
     {
-      
         return view ('HalamanDepan/aboutus');
     }
 

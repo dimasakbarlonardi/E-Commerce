@@ -12,6 +12,7 @@
                                         <th scope="col">No</th>
                                         <th scope="col">Id Transaksi</th>
                                         <th scope="col">Nama Pemesan</th>
+                                        <th scope="col">Alamat</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Total</th>
                                         <th scope="col" class="text-center">&nbsp;&nbsp;&nbsp;&nbsp; Aksi</th>
@@ -23,15 +24,8 @@
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$item->pesanan_id}}</td>
                                             <td>{{$item->User->name}}</td>
-                                            <td>
-                                                @if ($item->ongkir == null)
-                                                    Menunggu Konfirmasi
-                                                    @elseif ($item->status == 'Belum Bayar')
-                                                        Belum Dibayar
-                                                @else
-                                                    Lunas
-                                                @endif
-                                            </td>
+                                            <td>{{$item->User->alamat}}</td>
+                                            <td>{{ $item->status }}</td>
                                              <td>Rp. {{number_format($item->jumlah_harga + $item->ongkir, 0, ',', '.')}}</td>
                                              <td class="inline text-center">
                                                 <a href="{{ route('transaksi.edit', $item->pesanan_id) }}"> <button class="btn btn-default btn-xs m-r-5" data-toggle="tooltip" data-original-title="Edit"><i class="fas fa-pen-square font-14"></i></button></a>

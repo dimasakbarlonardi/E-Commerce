@@ -71,17 +71,17 @@ class TransaksiController extends Controller
     public function update(Request $request, $pesanan_id)
     {
         $request->validate([
-            'status' => 'required',
-            'ongkir' => 'required',
+            'noresi' => 'max:50'
         ], [
-            'status.required' => 'Status transaksi tidak boleh kosong',
-            'ongkir.required' => 'Ongkir tidak boleh kosong',
+            'noresi.max' => 'No resi tidak boleh lebih dari 50 karakter',
         ]);
+        
         $pesanans = Pesanan::find($pesanan_id);
         $pesanans->update([
             'status' => $request->status,
             'ongkir' => $request->ongkir,
             'kurir' => $request->kurir,
+            'noresi' => $request->noresi,
         ]);
 
         return redirect()->route('transaksi.index')

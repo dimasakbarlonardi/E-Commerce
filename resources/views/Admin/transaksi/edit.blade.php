@@ -22,8 +22,15 @@
                             </div>
                             <div class="col-md-3">
                               <label for="inputOngkir" class="form-label"><h6>Ongkir</h6></label>
-                              <input name="ongkir" type="text" class="form-control @error('status') is-invalid @enderror" id="inputOngkir" placeholder="Ex.8000" value="{{old('status',$pesanans->ongkir)}}">
+                              <input name="ongkir" type="text" class="form-control @error('ongkir') is-invalid @enderror" id="inputOngkir" placeholder="Ex.8000" value="{{old('ongkir',$pesanans->ongkir)}}">
                               @error('ongkir')
+                                  <div class="invalid-feedback">{{$message}}</div>
+                              @enderror
+                            </div>
+                            <div class="col-md-3">
+                              <label for="inputNoResi" class="form-label"><h6>No Resi</h6></label>
+                              <input name="noresi" type="text" class="form-control @error('noresi') is-invalid @enderror" id="inputNoResi" placeholder="Ex. 323-XXX" value="{{old('noresi',$pesanans->noresi)}}">
+                              @error('noresi')
                                   <div class="invalid-feedback">{{$message}}</div>
                               @enderror
                             </div>
