@@ -11,7 +11,6 @@ use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\TransaksiDetailController;
 
 // USER
-Route::get('/home', [HomeController::class, 'index']);
 Route::get('/', [UserController::class, 'home'])->name('home.index'); 
 Route::get('/produk', [UserController::class, 'produk'])->name('produks.index'); 
 Route::get('/about', [UserController::class, 'about'])->name('about.index');
@@ -30,7 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('cart-delete/{id}', [UserController::class, 'delete'])->name('checkoutdelete.index');
     // ! Riwayat Pemesanan
     Route::get('riwayatpemesanan', [UserController::class, 'riwayat'])->name('riwayat.index');
-    Route::get('riwayatpemesanan/{id}', [UserController::class, 'detail']);
+    Route::get('riwayatpemesanan/{id}', [UserController::class, 'detail'])->name('riwayatdetail.index');
     // ! Check Out
     Route::post('Check-Out/{id}', [UserController::class, 'checkout'])->name('checkout.index');
 });

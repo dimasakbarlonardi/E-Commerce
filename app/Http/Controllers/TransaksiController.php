@@ -61,7 +61,6 @@ class TransaksiController extends Controller
         $pesanans = Pesanan::find($pesanan_id);
         return view('Admin.transaksi.edit', compact('pesanans'));
     }
-
     /**
      * Update the specified resource in storage.
      *

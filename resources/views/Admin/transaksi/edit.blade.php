@@ -27,7 +27,7 @@
                                   <div class="invalid-feedback">{{$message}}</div>
                               @enderror
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-1">
                               <label for="inputKurir" class="form-label"><h6>Kurir</h6></label>
                                 <select name="kurir" id="inputKurir" class="form-select" aria-label="Default select example">
                                   <option value="">- Pilih Kurir -</option>

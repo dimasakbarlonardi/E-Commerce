@@ -81,7 +81,7 @@
                             <td>
                                    
                             </td>
-                            <td><a class="primary-btn" href="#">Tambah</a> 
+                            <td><a class="primary-btn" href="{{route ('produks.index')}}">Tambah</a> 
                             </td>
                         </tr>
                         <tr>

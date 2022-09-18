@@ -21,6 +21,15 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="ibox bg-warning color-white widget-stat">
+                <div class="ibox-body">
+                    <h2 class="m-b-5 font-strong">{{$pesanan->count()}}</h2>
+                    <div class="m-b-5">Pesanan</div><i class="ti-money widget-stat-icon"></i>
+                    <div><small>Jumlah Transaksi</small></div>
+                </div>
+            </div>
+        </div>
     </div>
 {{-- akhir status --}}
 {{-- tabel jenis --}}
@@ -43,7 +52,6 @@
                 <tbody>
                     @forelse ($pesanan as $item)
                         <tr>
-                            <td>{{$loop->iteration}}</td>
                             <td>{{$item->tanggal}}</td>
                             <td>{{$item->pesanan_id}}</td>
                             <td>{{$item->User->name}}</td>
@@ -62,6 +70,43 @@
                                     <i class="ti-pencil"></i>
                                 </a>
                             </td> 
+                        </tr>
+                          @empty
+                    
+                    @endforelse
+                
+                </tbody>
+            </table>
+            
+        </div>
+        {{-- {{$barang->links()}} --}}
+    </div>
+</div>
+
+<div class="ibox mt-5">
+    <div class="ibox-head mt-5">
+        <div class="ibox-title text-center">Data Produk Tersedia </div>
+    </div>
+    <div class="ibox-body">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Nama Barang</th>
+                        <th scope="col">Harga</th>
+                        <th scope="col">Stok</th>
+                        <th scope="col">Kategori</th>
+                        <th scope="col">Deskripsi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($produks as $item)
+                        <tr>
+                            <td>{{$item->nama_barang}}</td>
+                            <td>{{$item->harga}}</td>
+                            <td>{{$item->stok}}</td>
+                            <td>{{$item->kategori}}</td>
+                            <td>{{$item->keterangan}}</td>
                         </tr>
                           @empty
                     

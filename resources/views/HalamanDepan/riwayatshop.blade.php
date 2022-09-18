@@ -14,56 +14,70 @@
 @endsection
 
 @section('Content')
-<!--================Order Details Area =================-->
 <section class="order_details section_gap">
     <div class="container">
-        <h3 class="title_confirmation">Silahkan anda transfer di rekening <b>BANK BRI Nomor Rekening : 32113-821312-123</b>  dengan nominal : <b> Rp. </b></h3>
-    
-        <h3 class="title_confirmation"></b></h3>
-            <div class="cart__discount">
-                <h4 style="color: red; margin-bottom: 0px">Pembayaran</h4>
-                <h4 style="color: #212121; margin-top: 15px">Silahkan anda transfer di rekening <b>BANK BRI Nomor Rekening : 32113-821312-123</b>
-                    <br>
-                    dengan nominal : <b> Rp. </b></h4> 
-                    <h5>Kemudian konfirmasi melalui via Whatsapp dengan nomor: <b>0827328328</b> <br> 
-                        cantumkan nama <b>(Nama harus sesuai dengan akun K-Style Outlet)</b></h5>
-            </div>
-      
-    
-        <div class="row order_d_inner">
-            <div class="col-lg-4">
-                <div class="details_item">
-                    <h4>Order Info</h4>
-                    <ul class="list">
-                        <li><a href="#"><span>No</span> : 60235</a></li>
-                        <li><a href="#"><span>Produk</span> : Los Angeles</a></li>
-                        <li><a href="#"><span>Size</span> : USD 2210</a></li>
-                        <li><a href="#"><span>Pesanan</span> : Check payments</a></li>
-                        <li><a href="#"><span>Jumlah Harga</span> : Check payments</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="details_item">
-                    <h4>Billing Address</h4>
-                    <ul class="list">
-                        <li><a href="#"><span>Street</span> : 56/8</a></li>
-                        <li><a href="#"><span>City</span> : Los Angeles</a></li>
-                        <li><a href="#"><span>Country</span> : United States</a></li>
-                        <li><a href="#"><span>Postcode </span> : 36952</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="details_item">
-                    <h4>Shipping Address</h4>
-                    <ul class="list">
-                        <li><a href="#"><span>Street</span> : 56/8</a></li>
-                        <li><a href="#"><span>City</span> : Los Angeles</a></li>
-                        <li><a href="#"><span>Country</span> : United States</a></li>
-                        <li><a href="#"><span>Postcode </span> : 36952</a></li>
-                    </ul>
-                </div>
+        <h3 class="title_confirmation">Mohon Menunggu konfirmasi admin. Jika Status sudah di konfirmasi klik Detail untuk melanjutkan Pembayaran</h3>
+        <div class="cart_inner">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">status</th>
+                            <th scope="col">Harga</th>
+                            <th scope="col">tanggal</th>
+                            <th scope="col">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($pesananAll as $item)
+                        <tr>
+                            <td>
+                                <div class="media">
+                                   
+                                    <div class="media-body">
+                                        <p>{{($item->status)}}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <h5>Rp. {{number_format($item->jumlah_harga, 0, ',', '.')}}</h5>
+                            </td>
+                            <td>
+                                <div class="product_count">
+                                   
+                                        {{date('d-M-Y' ,strtotime($item->created_at))}} 
+                                </div>
+                            </td>
+                            <td>
+                                <div class="button-group-area mt-40">
+                                <a href="{{route('riwayatdetail.index' , $item->pesanan_id)}}" class="genric-btn primary circle arrow">Detail<span class="lnr lnr-arrow-right"></span></a>
+                                </div>
+                            </td>
+                            <td>
+                                
+                            </td>
+                        </tr>
+                        
+                        @empty
+                        @endforelse
+                       
+                        <tr class="bottom_button">
+                            <td>          
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                   
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                       
+                    
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

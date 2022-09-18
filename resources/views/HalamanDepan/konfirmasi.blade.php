@@ -17,6 +17,6 @@
 	<!--================Order Details Area =================-->
 	<section class="order_details section_gap">
 		<div class="container">     
-			<h3 class="title_confirmation"> Terimakasih sudah memesan produk kami. Mohon Menunggu konfirmasi admin</h3>
+			<h3 class="title_confirmation"> Terimakasih sudah memesan produk kami. Mohon Menunggu konfirmasi Admin di menu Riwayat Transaksi.</h3>
 			</div>
             @endsection

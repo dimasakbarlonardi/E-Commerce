@@ -2,7 +2,7 @@
 @section('content')
 <div class="ibox mt-5">
                     <div class="ibox-head mt-5">
-                        <div class="ibox-title text-center">Data Pemesanan </div>
+                        <div class="ibox-title text-center">Data Detail Pemesanan </div>
                     </div>
                     <div class="content mt-3">
                         <div class="animated fadeIn">
@@ -13,9 +13,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="card">
-                                                        <div class="card-header">
-                                                            <strong class="card-title">Table Detail Pemesanan</strong>
-                                                        </div>
+        
                                                         <div class="card-body">
                                                             <table id="bootstrap-data-table" class="table">
                                                                 <thead>

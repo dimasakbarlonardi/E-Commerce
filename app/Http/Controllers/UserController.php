@@ -11,41 +11,46 @@ use Illuminate\Support\Carbon;
 
 class UserController extends Controller
 {
+    // Halaman Beranda User
     public function home()
     {
-        // $barang = barang::all();
+        $produks = Produk::all();
         return view ('HalamanDepan/home');
     }
-
+    
+    // Halaman Produk User
     public function produk(Request $request)
     {   
         if ($request->kategori) {
-            $produks = Produk::where('kategori', 'LIKE', '%' . $request->kategori . '%')->get();
+            $produks = Produk::where('kategori', 'LIKE', '%' . $request->kategori . '%')->paginate(6);
         } else {
-            $produks = Produk::all();
+            $produks = Produk::paginate(6);
         }
         return view ('HalamanDepan/shop', compact('produks')) ;
     }
 
+    // Halaman Tentang Kami User
     public function about()
     {
-        // $barang = barang::all();
+      
         return view ('HalamanDepan/aboutus');
     }
 
+    // Halaman Kontak Kami
     public function contact()
     {
 
     return view ('HalamanDepan/contact');
     }
 
+    // Halaman Produk Detail
     public function shopdetail(Produk $produks,$produk_id)
     {
         $produks = Produk::find($produk_id);
         return view ('HalamanDepan/shopdetail', compact('produks'));
     }
 
-    // loginn user 
+    // Halaman login & register user 
     public function login()
     {
         return view ('Login/front_login');
@@ -56,16 +61,7 @@ class UserController extends Controller
         return view ('Login/front_register');
     }
 
-    public function cart()
-    {
-        $pesanan = Pesanan::where('user_id', Auth::user()->user_id)->where('status', 'Check Out')->first();
-        if(!empty($pesanan)) {
-            $pesananDetail = PesananDetail::where('pesanan_id', $pesanan->pesanan_id)->get();
-            return view ('HalamanDepan/cart',compact('pesanan', 'pesananDetail'));
-        }
-        return redirect()->route('produks.index');
-    }
-
+    // Halaman Profil User dan Update Profil User
     public function user()
     {
         $user = User::find(Auth::user()->user_id)->first();
@@ -96,30 +92,38 @@ class UserController extends Controller
         $user->save();
     }
 
+    // Halaman Riwayat Transaksi User
     public function riwayat()
     {
-        $pesanan = Pesanan::where('ongkir', null)->where('kurir', null)->first();
         $pesananAll = Pesanan::all()->where('status', '!=', 'Check Out');
-        if (!$pesanan == null) {
-            return view('HalamanDepan.konfirmasi');
-        } else {
             return view('HalamanDepan/riwayatshop', compact('pesananAll'));
-        }
     }
 
-    public function detail($id)
+    // Halaman Konfirmasi User
+    public function detail($pesanan_id)
     {
-        $pesanan_konfirmasi = Pesanan::where('id', $id)->where('ongkir', 0)->first();
-        if ($pesanan_konfirmasi == null) {
-            $pesanan = Pesanan::where('id', $id)->first();
+        $pesanan = Pesanan::where('pesanan_id', $pesanan_id)->where('ongkir', null)->where('kurir', null)->first();
+        if (!$pesanan) {
+            $pesanan = Pesanan::where('pesanan_id', $pesanan_id)->first();
             $PesananDetail = PesananDetail::where('pesanan_id', $pesanan->pesanan_id)->get();
-            return view('HalamanDepan/riwayatshop', compact('pesanan', 'PesananDetail'));
+            return view('HalamanDepan.riwayatshopedetail', compact('pesanan', 'PesananDetail'));
         } else {
             return view('HalamanDepan/konfirmasi');
         }
     }
-    
-    // ! Masukkin produk ke keranjang
+
+     //  Halaman keranjang
+    public function cart()
+    {
+        $pesanan = Pesanan::where('user_id', Auth::user()->user_id)->where('status', 'Check Out')->first();
+        if(!empty($pesanan)) {
+            $pesananDetail = PesananDetail::where('pesanan_id', $pesanan->pesanan_id)->get();
+            return view ('HalamanDepan/cart',compact('pesanan', 'pesananDetail'));
+        }
+        return redirect()->route('produks.index');
+    }
+
+    //  Masukkin produk ke keranjang
     public function pesan(Request $request, $produk_id)
     {   
         // Validasi
@@ -132,9 +136,9 @@ class UserController extends Controller
         $produks = Produk::where('produk_id', $produk_id)->first();
         $tanggal = Carbon::now()->format('Y-m-d');
         $total = $produks->harga * $request->jumlah;
-        // Validasi jumlah pesanan melebihi stock
+        // Validasi jumlah pesanan melebihi stok
         if($request->jumlah > $produks->stok) {
-            return redirect()->back()->with('status', 'Jumlah pesanan tidak boleh melebihi stock');
+            return redirect()->back()->with('status', 'Jumlah pesanan tidak boleh melebihi stok');
         }
 
         // User menambah pesanan
@@ -171,16 +175,17 @@ class UserController extends Controller
 
         if(!($request->jumlah) == 0) {
             if(empty($pesananDetailTambah)) {
-                // Menambah baru pesanan detail
+        // Menambah baru pesanan detail
                 $pesananDetail = new PesananDetail([
                     'produk_id' => $produks->produk_id,
                     'pesanan_id' => $newPesananId->pesanan_id,
                     'jumlah' => $request->jumlah,
+                    'size' => $request->size,
                     'jumlah_harga'  => $total,
                 ]);
                 $pesananDetail->save();
             } else {
-                // Mengupdate pesanan detail
+        // Mengupdate pesanan detail
                 $pesananDetailUpdate = PesananDetail::where('produk_id', $produks->produk_id)->where('pesanan_id', $newPesananId->pesanan_id)->first();
                 $pesananDetailUpdate->update([
                     'jumlah' => $pesananDetailUpdate->jumlah + $request->jumlah,
@@ -194,7 +199,7 @@ class UserController extends Controller
         return redirect('/')->with('status', 'Pesanan anda sudah masuk ke keranjang');
     }
 
-    // ! Delete produk yang ada di keranjang
+    //  Delete produk yang ada di keranjang
     public function delete($pesanandetail_id)
     {
         // Mencari pesanan detail id
@@ -221,6 +226,7 @@ class UserController extends Controller
 
     }
 
+    // Pemesanan User
      public function checkOut(Request $request)
     {
         $user = User::where('user_id', Auth::user()->user_id)->first();
@@ -236,11 +242,11 @@ class UserController extends Controller
         
         $pesananDetail = PesananDetail::where('pesanan_id', $pesananUpdate->pesanan_id)->get();
         foreach ($pesananDetail as $pesananDetail) {
-            $barang = Produk::where('produk_id', $pesananDetail->produk->produk_id)->first();
-            $barang->update([
-                'stock' => $barang->stock - $pesananDetail->jumlah_pesanan,
+            $produk = Produk::where('produk_id', $pesananDetail->produk_id)->first();
+            $produk->update([
+                'stok' => $produk->stok - $pesananDetail->jumlah,
             ]);
-            $barang->save();
+            $produk->save();
         }
 
         return redirect()->route('riwayat.index')->with('status', 'Pesanan Berhasil Di Check Out');

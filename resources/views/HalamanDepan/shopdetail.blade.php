@@ -30,8 +30,8 @@
                     <h3>{{$produks->nama_barang}}</h3>
                     <h2>Rp.{{number_format($produks->harga, 0, ',', '.')}}</h2>
                     <ul class="list">
-                        <li><a class="" href="#"><span>Kategori</span> : {{$produks->kategori}}</a></li>
-                        <li><a href="#"><span>Stok</span> : {{$produks->stok}}</a></li>
+                        <li><a><span>Kategori</span> : {{$produks->kategori}}</a></li>
+                        <li><a><span>Stok</span> : {{$produks->stok}}</a></li>
                     </ul>
                     <p><b>{{$produks->keterangan}}</b></p>
                         @if (session('status'))
@@ -45,8 +45,20 @@
 									<input type="text" id="quantity" name="jumlah" class="form-control input-number text-center" value="1" min="1" max="100">
 								</div>
 							</div>
-                              <div class="card_area d-flex align-items-center">
-                              <button class="primary-btn center mt-3" type="submit">Masukkan Keranjang</button>
+                            <div class="single-element-widget mt-30">
+                                <h3 class="mb-30 mt-3">Ukuran</h3>
+                                <div class="default-select" id="default-select">
+                                            <select name="size">
+                                                <option value="">Pilih</option>
+                                    <option value="S">S</option>
+                                    <option value="M">M</option>
+                                    <option value="L">L</option>
+                                    <option value="XL">XL</option>
+                                    </select>
+                                </div>
+                            </div>
+                              <div class="card_area align-items-center  ">
+                              <button class="primary-btn w-100 mt-3 mb-3" type="submit">Masukkan Keranjang</button>
                               </div>
 							</form>
                 </div>
