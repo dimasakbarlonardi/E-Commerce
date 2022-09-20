@@ -17,23 +17,16 @@
 <section class="login_box_area section_gap">
     <div class="container">
         <div class="row">
-            <div class="col-lg-6">
-                <div class="login_box_img">
-                    <img class="img-fluid" src="{{ asset('assets/front-end/img/login.jpg')}}" alt="">
-                    <div class="hover">
-                        <h4>Tidak Mempunyai Akun?</h4>
-                        <p>Daftar Segera Untuk Dapat melanjutkan Belanja Anda!</p>
-                        <a class="primary-btn" href="{{ route('register') }}">Daftar Akun</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="login_form_inner">
-                    <h3>Log In</h3>
-                    <form class="row login_form mb-5" action="{{ route('login') }}" method="post" id="contactForm" novalidate="novalidate">
+                    <h3>Reset Password</h3>
+                    <form class="row login_form mb-5" method="POST" action="{{ route('password.update') }}" id="contactForm" novalidate="novalidate">
                         @csrf
+
+                        <input type="hidden" name="token" value="{{ $token }}">
+
                         <div class="col-md-12 form-group">
-                            <input type="text" class="form-control" id="email" name="email" placeholder="E-Mail" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'">
+                            <input type="hidden" class="form-control" id="email" name="email" placeholder="E-Mail" value="{{ $email }}" onfocus="this.placeholder = ''">
                         </div>
 
                         @error('email')
@@ -41,9 +34,8 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                         @enderror
-
                         <div class="col-md-12 form-group">
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                         </div>
 
                         @error('password')
@@ -51,13 +43,13 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                         @enderror
-
-                        <div class="col-md-12 form-group mb-0">
-                            <button type="submit" value="submit" class="primary-btn">Log In</button>
+                        <div class="col-md-12 form-group">
+                            <input type="password" class="form-control" id="email" name="password_confirmation" placeholder="Konfirmasi Password">
                         </div>
-                        <div class="col-12 form-group mt-0">
-                            <a href="{{ route('password.request') }}">Forgot password?</a>
-                        </div>
+                        
+                            <div class="col-md-12 form-group mt-2">
+                                <button type="submit" value="submit" class="primary-btn">Reset</button>
+                            </div>
                     </form>
                 </div>
             </div>
